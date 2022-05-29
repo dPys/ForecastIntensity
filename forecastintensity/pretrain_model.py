@@ -1,16 +1,9 @@
 import os
-import requests
-import json
 import joblib
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
-from datetime import date, timedelta, datetime
 from sklearn.linear_model import ElasticNet
-from prefect import task, Flow
-from prefect.schedules import IntervalSchedule
 from skforecast.ForecasterAutoreg import ForecasterAutoreg
-from sklearn.metrics import mean_squared_error
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from skforecast.model_selection import grid_search_forecaster, \
@@ -117,12 +110,12 @@ def train_model(df):
                                                   label='real')
     predictions.plot(linewidth=2, label='prediction', ax=ax)
     ax.set_title('Forecast vs Real Intensity')
-    ax.legend();
+    ax.legend()
     plt.show()
 
     print(f'Backtest error: {metric}')
 
-    joblib.dump(forecaster, f"./models/elastic_net.pkl")
+    joblib.dump(forecaster, f"{os.path.dirname(__file__)}/models/elastic_net.pkl")
 
     return 0
 

@@ -1,20 +1,12 @@
 import os
 import requests
-import json
 import sys
 import joblib
 import pandas as pd
 import numpy as np
-from datetime import date, timedelta, datetime
-from sklearn.linear_model import ElasticNet
+from datetime import timedelta, datetime
 from prefect import task, Flow
 from prefect.schedules import IntervalSchedule
-from skforecast.ForecasterAutoreg import ForecasterAutoreg
-from sklearn.metrics import mean_squared_error
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from skforecast.model_selection import grid_search_forecaster, \
-    backtesting_forecaster
 
 
 url_i = "https://api.carbonintensity.org.uk/intensity"
@@ -215,7 +207,7 @@ if __name__ == '__main__':
     with Flow("Predict Half-Hour Carbon Intensities",
               schedule=schedule) as flow:
         e = extract()
-        t = transform(e, f"./models/elastic_net.pkl")
+        t = transform(e, f"{os.path.dirname(__file__)}/models/elastic_net.pkl")
         l = load(t, URI)
 
     flow.run()
