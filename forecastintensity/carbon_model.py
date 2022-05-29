@@ -136,7 +136,7 @@ def transform(x, model_path):
 
 
 @task(max_retries=10, retry_delay=timedelta(0, 1), log_stdout=True)
-def load(data, uri:str):
+def load(data, uri: str):
     """
     This task will save the prediction to an output file.
     If failed, this task will retry for 10 times and then fail permenantly.
@@ -159,18 +159,16 @@ def load(data, uri:str):
         )
         meta.create_all(engine)
 
-    query.close()
-
     dates = pd.date_range(
-        start = data.index.min().strftime('%Y-%m-%d %H:%M:%S'),
-        periods = 48,
-        freq = '30min'
+        start=data.index.min().strftime('%Y-%m-%d %H:%M:%S'),
+        periods=48,
+        freq='30min'
         )
 
     upload_data = list(zip([
-    datetime.now().strftime('%Y-%m-%d %H:%M:%S')] * (num_predictions),
-    [event.strftime('%Y-%m-%d %H:%M:%S') for event in dates ],
-        predictions[1:]
+    datetime.now().strftime('%Y-%m-%d %H:%M:%S')] * 48,
+    [event.strftime('%Y-%m-%d %H:%M:%S') for event in dates],
+        data.intensity_forecast[1:]
     ))
 
     # Insert the data

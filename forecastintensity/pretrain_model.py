@@ -30,7 +30,7 @@ def train_model(df):
     data_val.intensity.plot(ax=ax, label='val', linewidth=1)
     data_test.intensity.plot(ax=ax, label='test', linewidth=1)
     ax.set_title('Carbon Intensity')
-    ax.legend();
+    ax.legend()
 
     zoom = ('2021-01-01 00:00:00','2021-12-31 00:00:00')
     fig = plt.figure(figsize=(12, 6))
@@ -115,7 +115,8 @@ def train_model(df):
 
     print(f'Backtest error: {metric}')
 
-    joblib.dump(forecaster, f"{os.path.dirname(__file__)}/models/elastic_net.pkl")
+    joblib.dump(forecaster, f"{os.path.dirname(__file__)}/models/"
+                            f"elastic_net.pkl")
 
     return 0
 
