@@ -56,15 +56,20 @@ RUN apt-get update -y \
         debian-archive-keyring \
         dirmngr \
         git \
-    && apt-get install -y \
-        python3 \
-        python3-pip \
-    && apt-get clean \
-    && pip3 install --upgrade pip \
-    && pip3 install ipython certifi \
+    && cd /tmp \
+    && curl -O https://www.python.org/ftp/python/3.8.2/Python-3.8.2.tar.xz \
+    && tar -xf Python-3.8.2.tar.xz \
+    && cd Python-3.8.2 \
+    && ./configure --enable-optimizations --enable-shared --prefix=/usr/local --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" --with-ensurepip=install --enable-loadable-sqlite-extensions \
+    && make -j 4 \
+    && make altinstall \
+    && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
+    && python3.8 get-pip.py \
+    && pip install --upgrade pip \
+    && pip install ipython \
     && git clone -b main https://github.com/dPys/ForecastIntensity /home/ForecastIntensity \
     && cd /home/ForecastIntensity \
-    && pip3 install -r requirements.txt \
+    && pip install -r requirements.txt \
     && find /home/ForecastIntensity/forecastintensity -type f -iname "*.py" -exec chmod 777 {} \; \
     && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
     && apt-get purge -y --auto-remove \
@@ -79,6 +84,8 @@ RUN apt-get update -y \
       gnupg \
       g++ \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && mkdir /working \
+    && chmod -R 777 /working
 
 EXPOSE 8080 80 443 445 139 22
 

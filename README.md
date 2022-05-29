@@ -10,7 +10,7 @@ docker build -t forecastintensity .
 
 Usage
 -----
-To generate predictions, 
+To begin generating predictions, run the command below, using a local directory to mount of your choice.
 ```
-docker run -it --rm -p 80:80 -v forecastintensity
+docker run -it --rm -p 80:80 -v {/path/to/a/working/directory}:/working forecastintensity
 ```

@@ -126,6 +126,7 @@ def train_model(df):
 
     return 0
 
+
 if __name__ == '__main__':
     df = aggregate_years()
     df.to_csv(f"./data/training_data.csv")

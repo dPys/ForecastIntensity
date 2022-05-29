@@ -201,7 +201,7 @@ if __name__ == '__main__':
     URI = sys.argv[0]
 
     if URI is None:
-        URI = f"sqlite:///{os.path.expanduser('~')}/intensity_forecasts.db"
+        URI = f"sqlite:///working/intensity_forecasts.db"
 
     # Create a schedule object.
     # This object starts from the time of script execution and repeats once
