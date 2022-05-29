@@ -55,21 +55,16 @@ RUN apt-get update -y \
         apt-transport-https \
         debian-archive-keyring \
         dirmngr \
+        git \
+    && apt-get install -y \
+        python3 \
+        python3-pip \
     && apt-get clean \
-    && cd /tmp \
-    && curl -O https://www.python.org/ftp/python/3.8.2/Python-3.8.2.tar.xz \
-    && tar -xf Python-3.8.2.tar.xz \
-    && cd Python-3.8.2 \
-    && ./configure --enable-optimizations --enable-shared --prefix=/usr/local --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" --with-ensurepip=install --enable-loadable-sqlite-extensions \
-    && make -j 4 \
-    && make altinstall \
-    && apt-get update \
-    && apt-get install python3-pip \
-    && pip install --upgrade pip \
-    && pip install ipython \
+    && pip3 install --upgrade pip \
+    && pip3 install ipython certifi \
     && git clone -b main https://github.com/dPys/ForecastIntensity /home/ForecastIntensity \
     && cd /home/ForecastIntensity \
-    && pip install -r requirements.txt \
+    && pip3 install -r requirements.txt \
     && find /home/ForecastIntensity/forecastintensity -type f -iname "*.py" -exec chmod 777 {} \; \
     && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
     && apt-get purge -y --auto-remove \
@@ -87,4 +82,4 @@ RUN apt-get update -y \
 
 EXPOSE 8080 80 443 445 139 22
 
-ENTRYPOINT ["/usr/local/bin/python3", "-m", "/home/ForecastIntensity/forecastintensity/carbon_model.py"]
+#ENTRYPOINT ["/usr/bin/python3", "/home/ForecastIntensity/forecastintensity/carbon_model.py"]

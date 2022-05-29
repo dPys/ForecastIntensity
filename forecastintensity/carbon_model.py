@@ -152,6 +152,8 @@ def load(data, uri:str):
     from sqlalchemy import create_engine, Table, Column, Integer, String, \
         MetaData
 
+    print(data)
+
     engine = create_engine(uri)
 
     if not engine.dialect.has_table(engine, 'forecasts'):

@@ -10,6 +10,7 @@ docker build -t forecastintensity .
 
 Usage
 -----
+To generate predictions, 
 ```
-docker run -it --rm -p 80:80 run forecastintensity:latest
+docker run -it --rm -p 80:80 -v forecastintensity
 ```
