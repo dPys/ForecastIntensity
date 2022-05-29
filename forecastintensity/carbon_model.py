@@ -168,7 +168,7 @@ def load(data, uri: str):
     upload_data = list(zip([
     datetime.now().strftime('%Y-%m-%d %H:%M:%S')] * 48,
     [event.strftime('%Y-%m-%d %H:%M:%S') for event in dates],
-        data.intensity_forecast[1:]
+        data.values[1:]
     ))
 
     # Insert the data
@@ -188,10 +188,7 @@ def load(data, uri: str):
 
 
 if __name__ == '__main__':
-    URI = sys.argv[0]
-
-    if URI is None:
-        URI = f"sqlite:///working/intensity_forecasts.db"
+    URI = f"sqlite:///working/intensity_forecasts.db"
 
     # Create a schedule object.
     # This object starts from the time of script execution and repeats once

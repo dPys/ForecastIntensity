@@ -21,35 +21,35 @@ def train_model(df):
     data = df.loc['2018-05-10 00:00:00': '2022-05-27 00:00:00']
     end_train = '2020-5-31 00:00:00'
     end_validation = '2022-4-29 00:00:00'
-    data_train = data.loc[: end_train, :]
-    data_val   = data.loc[end_train:end_validation, :]
-    data_test  = data.loc[end_validation:, :]
+    # data_train = data.loc[: end_train, :]
+    # data_val   = data.loc[end_train:end_validation, :]
+    # data_test  = data.loc[end_validation:, :]
 
-    fig, ax = plt.subplots(figsize=(12, 4))
-    data_train.intensity.plot(ax=ax, label='train', linewidth=1)
-    data_val.intensity.plot(ax=ax, label='val', linewidth=1)
-    data_test.intensity.plot(ax=ax, label='test', linewidth=1)
-    ax.set_title('Carbon Intensity')
-    ax.legend()
+    # fig, ax = plt.subplots(figsize=(12, 4))
+    # data_train.intensity.plot(ax=ax, label='train', linewidth=1)
+    # data_val.intensity.plot(ax=ax, label='val', linewidth=1)
+    # data_test.intensity.plot(ax=ax, label='test', linewidth=1)
+    # ax.set_title('Carbon Intensity')
+    # ax.legend()
 
-    zoom = ('2021-01-01 00:00:00','2021-12-31 00:00:00')
-    fig = plt.figure(figsize=(12, 6))
-    grid = plt.GridSpec(nrows=8, ncols=1, hspace=0.6, wspace=0)
-    main_ax = fig.add_subplot(grid[1:3, :])
-    zoom_ax = fig.add_subplot(grid[5:, :])
-    data.intensity.plot(ax=main_ax, c='black', alpha=0.5, linewidth=0.5)
-    min_y = min(data.intensity)
-    max_y = max(data.intensity)
-    main_ax.fill_between(zoom, min_y, max_y, facecolor='blue', alpha=0.5,
-                         zorder=0)
-    main_ax.set_xlabel('')
-    data.loc[zoom[0]: zoom[1]].intensity.plot(ax=zoom_ax, color='blue',
-                                              linewidth=2)
-    main_ax.set_title(f'Carbon intensity: {data.index.min()}, '
-                      f'{data.index.max()}', fontsize=14)
-    zoom_ax.set_title(f'Carbon intensity: {zoom}', fontsize=14)
-    plt.subplots_adjust(hspace=1)
-    plt.show()
+    # zoom = ('2021-01-01 00:00:00','2021-12-31 00:00:00')
+    # fig = plt.figure(figsize=(12, 6))
+    # grid = plt.GridSpec(nrows=8, ncols=1, hspace=0.6, wspace=0)
+    # main_ax = fig.add_subplot(grid[1:3, :])
+    # zoom_ax = fig.add_subplot(grid[5:, :])
+    # data.intensity.plot(ax=main_ax, c='black', alpha=0.5, linewidth=0.5)
+    # min_y = min(data.intensity)
+    # max_y = max(data.intensity)
+    # main_ax.fill_between(zoom, min_y, max_y, facecolor='blue', alpha=0.5,
+    #                      zorder=0)
+    # main_ax.set_xlabel('')
+    # data.loc[zoom[0]: zoom[1]].intensity.plot(ax=zoom_ax, color='blue',
+    #                                           linewidth=2)
+    # main_ax.set_title(f'Carbon intensity: {data.index.min()}, '
+    #                   f'{data.index.max()}', fontsize=14)
+    # zoom_ax.set_title(f'Carbon intensity: {zoom}', fontsize=14)
+    # plt.subplots_adjust(hspace=1)
+    # plt.show()
 
     forecaster = ForecasterAutoreg(
                 regressor = make_pipeline(StandardScaler(),
@@ -102,16 +102,16 @@ def train_model(df):
                                 verbose    = True
                             )
 
-    predictions = pd.Series(data=predictions.pred,
-                            index=data[end_validation:].index)
+    # predictions = pd.Series(data=predictions.pred,
+    #                         index=data[end_validation:].index)
 
-    fig, ax = plt.subplots(figsize=(12, 3.5))
-    data.loc[predictions.index, 'intensity'].plot(ax=ax, linewidth=2,
-                                                  label='real')
-    predictions.plot(linewidth=2, label='prediction', ax=ax)
-    ax.set_title('Forecast vs Real Intensity')
-    ax.legend()
-    plt.show()
+    # fig, ax = plt.subplots(figsize=(12, 3.5))
+    # data.loc[predictions.index, 'intensity'].plot(ax=ax, linewidth=2,
+    #                                               label='real')
+    # predictions.plot(linewidth=2, label='prediction', ax=ax)
+    # ax.set_title('Forecast vs Real Intensity')
+    # ax.legend()
+    # plt.show()
 
     print(f'Backtest error: {metric}')
 
