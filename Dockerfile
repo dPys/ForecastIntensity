@@ -94,4 +94,4 @@ RUN export GIT_SSL_NO_VERIFY=1 \
 
 EXPOSE 8080 80 443 445 139 22
 
-#ENTRYPOINT ["/usr/bin/python3", "/home/ForecastIntensity/forecastintensity/carbon_model.py"]
+ENTRYPOINT ["python3.8", "/home/ForecastIntensity/forecastintensity/carbon_model.py"]
