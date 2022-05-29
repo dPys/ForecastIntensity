@@ -66,25 +66,25 @@ RUN apt-get update -y \
     && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
     && python3.8 get-pip.py \
     && pip install --upgrade pip \
-    && pip install Cython setuptools ipython
+    && pip install Cython setuptools ipython \
+    && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
+    && apt-get purge -y --auto-remove \
+        wget \
+        cmake \
+        gcc \
+        curl \
+        openssl \
+        build-essential \
+        ca-certificates \
+        libc6-dev \
+        gnupg \
+        g++ \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN git clone -b main https://github.com/dPys/ForecastIntensity /home/ForecastIntensity \
     && cd /home/ForecastIntensity \
     && pip install -r requirements.txt \
     && find /home/ForecastIntensity/forecastintensity -type f -iname "*.py" -exec chmod 777 {} \; \
-    && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
-    && apt-get purge -y --auto-remove \
-      wget \
-      cmake \
-      gcc \
-      curl \
-      openssl \
-      build-essential \
-      ca-certificates \
-      libc6-dev \
-      gnupg \
-      g++ \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && mkdir /working \
     && chmod -R 777 /working
 
