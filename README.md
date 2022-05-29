@@ -5,6 +5,10 @@
 Install
 -------
 ```
+docker pull dpys/forecastintensity:latest
+```
+or
+```
 docker build -t forecastintensity .
 ```
 
