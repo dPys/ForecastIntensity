@@ -62,11 +62,22 @@ RUN apt-get update -y \
     && cd Python-3.8.2 \
     && ./configure --enable-optimizations --enable-shared --prefix=/usr/local --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" --with-ensurepip=install --enable-loadable-sqlite-extensions \
     && make -j 8 \
-    && make altinstall \
-    && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
-    && python3.8 get-pip.py \
+    && make altinstall
+
+RUN export GIT_SSL_NO_VERIFY=1 \
+    && curl https://bootstrap.pypa.io/get-pip.py | python3.8 \
     && pip install --upgrade pip \
     && pip install Cython setuptools ipython \
+    && pip install certifi -U --ignore-installed \
+    && pip install --upgrade pyopenssl \
+    && git config --global url."https://".insteadOf git:// \
+    && git config --global http.postBuffer 1048576000 \
+    && git clone -b main https://github.com/dPys/ForecastIntensity /home/ForecastIntensity \
+    && cd /home/ForecastIntensity \
+    && pip install -r requirements.txt \
+    && find /home/ForecastIntensity/forecastintensity -type f -iname "*.py" -exec chmod 777 {} \; \
+    && mkdir /working \
+    && chmod -R 777 /working \
     && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
     && apt-get purge -y --auto-remove \
         wget \
@@ -80,13 +91,6 @@ RUN apt-get update -y \
         gnupg \
         g++ \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-RUN git clone -b main https://github.com/dPys/ForecastIntensity /home/ForecastIntensity \
-    && cd /home/ForecastIntensity \
-    && pip install -r requirements.txt \
-    && find /home/ForecastIntensity/forecastintensity -type f -iname "*.py" -exec chmod 777 {} \; \
-    && mkdir /working \
-    && chmod -R 777 /working
 
 EXPOSE 8080 80 443 445 139 22
 

@@ -64,7 +64,7 @@ def train_model(df):
                 lags      = 48
             )
 
-    param_grid = {'elasticnet__alpha': [1e-3, 1e-2, 1e-1, 0.25, 0.5, 1],
+    param_grid = {'elasticnet__alpha': [1e-2, 1e-1, 0.25, 0.5, 1],
                   'elasticnet__l1_ratio': [0, 0.25, 0.50, 0.75, 1]}
     lags_grid = [24, 36, 48, 72]
 
