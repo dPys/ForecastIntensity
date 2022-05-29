@@ -8,7 +8,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from skforecast.model_selection import grid_search_forecaster, \
     backtesting_forecaster
-from . import period_i, period_g, build_dfs, scrub_ts_data, aggregate_years,
+from . import period_i, period_g, build_dfs, scrub_ts_data, aggregate_years
 
 url_i = "https://api.carbonintensity.org.uk/intensity"
 url_g = "https://api.carbonintensity.org.uk/generation"
