@@ -61,13 +61,14 @@ RUN apt-get update -y \
     && tar -xf Python-3.8.2.tar.xz \
     && cd Python-3.8.2 \
     && ./configure --enable-optimizations --enable-shared --prefix=/usr/local --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" --with-ensurepip=install --enable-loadable-sqlite-extensions \
-    && make -j 4 \
+    && make -j 8 \
     && make altinstall \
     && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
     && python3.8 get-pip.py \
     && pip install --upgrade pip \
-    && pip install ipython \
-    && git clone -b main https://github.com/dPys/ForecastIntensity /home/ForecastIntensity \
+    && pip install Cython setuptools ipython
+
+RUN git clone -b main https://github.com/dPys/ForecastIntensity /home/ForecastIntensity \
     && cd /home/ForecastIntensity \
     && pip install -r requirements.txt \
     && find /home/ForecastIntensity/forecastintensity -type f -iname "*.py" -exec chmod 777 {} \; \
