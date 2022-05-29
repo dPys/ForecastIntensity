@@ -63,6 +63,8 @@ RUN apt-get update -y \
     && ./configure --enable-optimizations --enable-shared --prefix=/usr/local --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" --with-ensurepip=install --enable-loadable-sqlite-extensions \
     && make -j 4 \
     && make altinstall \
+    && apt-get update \
+    && apt-get install python3-pip \
     && pip install --upgrade pip \
     && pip install ipython \
     && git clone -b main https://github.com/dPys/ForecastIntensity /home/ForecastIntensity \

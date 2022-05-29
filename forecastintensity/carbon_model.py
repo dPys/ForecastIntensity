@@ -213,7 +213,7 @@ if __name__ == '__main__':
     with Flow("Predict Half-Hour Carbon Intensities",
               schedule=schedule) as flow:
         e = extract()
-        t = transform(e, f"./models/reg.pkl")
+        t = transform(e, f"./models/elastic_net.pkl")
         l = load(t, URI)
 
     flow.run()

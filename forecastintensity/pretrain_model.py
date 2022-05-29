@@ -122,7 +122,7 @@ def train_model(df):
 
     print(f'Backtest error: {metric}')
 
-    joblib.dump(forecaster, f"./models/reg.pkl")
+    joblib.dump(forecaster, f"./models/elastic_net.pkl")
 
     return 0
 
